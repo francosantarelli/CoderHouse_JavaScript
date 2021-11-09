@@ -83,10 +83,10 @@ function prepararPedido(prod, cant) {
 const tomarPedido = () => {
     const producto = Number(prompt(`Seleccioná el producto:
     
-    1- Nueces ---> 100
-    2- Almendras ---> 200
-    3- Castañas ---> 300
-    4- Almohaditas ---> 50`));
+    1- Nueces       --->        100
+    2- Almendras    --->        200
+    3- Castañas     --->        300
+    4- Almohaditas  --->        50`));
 
     const cantidad = Number(prompt(`Ingrese la cantidad`));
     prepararPedido(producto, cantidad)
