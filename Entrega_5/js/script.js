@@ -1,30 +1,103 @@
-class Pedido {
-    constructor(producto, presentacion, cantidad, precio) {
-        this.producto = producto;
-        this.presentacion = presentacion;
-        this.cantidad = cantidad;
+class Venta {
+    constructor(mensaje, precio) {
+        this.mensaje = mensaje;
         this.precio = precio;
     }
 
-    mostrarPedido() {
-        console.log(`Has comprado ${this.cantidad} ${this.presentacion} de ${this.producto} a $${this.precio} cada uno`);
+    entregaPedido() {
+        alert(`${this.mensaje} el total es ${this.precio}`);
+        cobrar(this.precio);
     }
+    
 }
 
-let pedido1 = new Pedido('Almendras', 'Paquetes x 100gr', 10, 100);
-pedido1.mostrarPedido();
+/* Importe a Pagar */
 
-class Producto {
-    constructor(codigo, nombre, precio) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-
-    verProducto() {
-        console.log(`${this.codigo} - ${this.nombre} ---> $${this.precio}`);
-    }
+const multiplicar = (a, b) => {
+    return a * b;
 }
 
-let producto1 = new Producto('0001', 'Almendras', 100);
-producto1.verProducto();
+/* Función Cobrar */
+
+const cobrar = (importe) => {
+    let pago = 0;
+    let descuento = 0.20;
+
+    const medioPago = Number(prompt(`Seleccioná el Medio de Pago
+    
+    1- Cupón Promocional 20%
+    2- Mercado Pago
+    
+    `));
+
+    if (medioPago == 1) {
+        alert(`Se le aplicará un descuento del ${descuento*100}%. Su pago será de ${importe - (importe * descuento)}`);
+        while (importe > 0 && pago != (importe - (importe * descuento))) {
+            pago = Number(prompt(`Ingrese importe ${importe - (importe * descuento)}`));
+        }
+    } else {
+        while (importe > 0 && pago != importe) {
+            pago = Number(prompt(`Ingrese importe ${importe}`));
+        }
+    }
+
+    alert('Muchas gracias por su compra!');
+}
+
+/* Función Entrega Pedido y valida Productos */
+
+function prepararPedido(prod, cant) {
+    let mensaje = '';
+    let precio = 0;
+    let venta;
+
+    if (prod == 0) {
+        alert('No ha seleccionado un producto válido');
+    }
+    
+    switch (prod) {
+        case 1:
+            mensaje = 'Aquí están sus nueces';
+            precio = 100;
+            precio = multiplicar(precio, cant);
+            break;
+        case 2:
+            mensaje = 'Aquí están sus almendras';
+            precio = 200;
+            precio = multiplicar(precio, cant);
+            break;
+        case 3:
+            mensaje = 'Aquí están sus castañas';
+            precio = 300;
+            precio = multiplicar(precio, cant);
+            break;
+        case 4:
+            mensaje = 'Aquí están sus almohaditas';
+            precio = 50;
+            precio = multiplicar(precio, cant);
+            break;
+        default:
+            mensaje = 'No ha seleccionado un producto válido';
+            break;
+    }
+    venta = new Venta(mensaje, precio);
+    venta.entregaPedido();
+}
+
+/* Función Toma Pedido */
+
+const tomarPedido = () => {
+    const producto = Number(prompt(`Seleccioná el producto:
+    
+    1- Nueces       --->        100
+    2- Almendras    --->        200
+    3- Castañas     --->        300
+    4- Almohaditas  --->        50`));
+
+    const cantidad = Number(prompt(`Ingrese la cantidad`));
+    prepararPedido(producto, cantidad)
+}
+
+/* Ejecuta Programa */
+
+tomarPedido();
